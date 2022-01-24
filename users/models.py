@@ -12,3 +12,4 @@ class User(AbstractUser):
     city = models.CharField(null=False, max_length=120)
     country = models.CharField(null=False, max_length=150)
     phone = models.CharField(null=False, max_length=190)
+    balance = models.FloatField(null=False, default=0)
