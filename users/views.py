@@ -18,19 +18,8 @@ class RegisterAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = LoggedUserSerializer
-
-    def retrieve(self, request, pk=None):
-        queryset = User.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
+class RetrieveMyOwnData(APIView):
+    def get(self, request, format=None):
+        user = User.objects.get(pk=request.auth.get('user_id'))
         serializer = LoggedUserSerializer(user)
-        return Response(serializer.data)
-
-    def get_permissions(self):
-        if self.action == 'list':
-            permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
-        else:
-            permission_classes = [permissions.IsAuthenticated, IsHimself]
-        return [permission() for permission in permission_classes]
+        return Response(serializer.data, status=status.HTTP_200_OK)
