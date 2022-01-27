@@ -19,6 +19,7 @@ class RegisterAPIView(APIView):
 
 
 class RetrieveMyOwnData(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request, format=None):
         user = User.objects.get(pk=request.auth.get('user_id'))
         serializer = LoggedUserSerializer(user)
