@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from users import url
+from users import url as user_urls
+from movements import urls as movements_urls
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -23,6 +24,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('user/', include(url)),
+    path('user/', include(user_urls)),
+    path('movements/', include(movements_urls)),
     path('api_auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

@@ -1,11 +1,8 @@
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets
 from .serializers import RegisterSerializer, LoggedUserSerializer
 from rest_framework import permissions
 from .models import User
-from .permissions import IsHimself
 from rest_framework import status
 
 
