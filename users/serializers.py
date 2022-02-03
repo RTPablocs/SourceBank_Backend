@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth.hashers import make_password
+from movements.serializers import MovementSerializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -16,6 +17,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoggedUserSerializer(serializers.ModelSerializer):
+    movements = MovementSerializer(many=True, read_only=True)
+
     class Meta:
         model = User
         exclude = ['last_login', 'is_staff', 'date_joined', 'is_superuser', 'groups', 'user_permissions', 'password',
