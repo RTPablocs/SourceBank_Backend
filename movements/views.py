@@ -11,10 +11,12 @@ class RegisterMovement(APIView):
 
     def post(self, request, format=None):
         request.data['sender_id'] = request.auth.get('user_id')
+        user_name = request.data.pop('username')
+        request.data['receiver_id'] = User.objects.get(username=user_name).id
         serializer = RegisterMovementSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'message':'Transaction successful'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Transaction successful'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Create your views here.
