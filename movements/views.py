@@ -12,7 +12,10 @@ class RegisterMovement(APIView):
     def post(self, request, format=None):
         request.data['sender_id'] = request.auth.get('user_id')
         user_name = request.data.pop('username')
-        request.data['receiver_id'] = User.objects.get(username=user_name).id
+        try:
+            request.data['receiver_id'] = User.objects.get(username=user_name).id
+        except User.DoesNotExist:
+            return Response({"error": "user does not exist"}, status=status.HTTP_404_NOT_FOUND)
         serializer = RegisterMovementSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
