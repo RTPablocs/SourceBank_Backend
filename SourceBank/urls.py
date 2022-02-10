@@ -18,7 +18,7 @@ from django.urls import path, include
 from users import url as user_urls
 from movements import urls as movements_urls
 from rest_framework import routers
-
+from channels.routing import ProtocolTypeRouter
 router = routers.DefaultRouter()
 
 urlpatterns = [

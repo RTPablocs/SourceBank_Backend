@@ -1,5 +1,6 @@
-Django==4.0.1
+Django==4.0.2
 djangorestframework==3.13.1
 djangorestframework-simplejwt
 django-cors-headers
 Pillow
+channels~=3.0.4
