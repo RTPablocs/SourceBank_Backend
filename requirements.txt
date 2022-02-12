@@ -4,3 +4,4 @@ djangorestframework-simplejwt
 django-cors-headers
 Pillow
 channels~=3.0.4
+PyJWT~=2.3.0

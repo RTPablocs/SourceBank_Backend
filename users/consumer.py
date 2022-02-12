@@ -1,19 +1,18 @@
 import json
-from channels.generic.websocket import WebsocketConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
+from users.serializers import LoggedUserSerializer
 
 
-class UserConsumer(WebsocketConsumer):
-    def connect(self):
-        self.user = self.scope['user']
-        self.accept()
+class UserConsumer(AsyncWebsocketConsumer):
+    async def websocket_connect(self, event):
+        await self.accept()
 
     def disconnect(self, code):
         pass
 
-    def receive(self, text_data=None, bytes_data=None):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        self.send(text_data=json.dumps({
-            'message': 'A'
+    async def websocket_receive(self, message):
+        print(self.scope)
+        serializer = LoggedUserSerializer(self.scope['user'])
+        await self.send(text_data=json.dumps({
+            'message': serializer.data
         }))
