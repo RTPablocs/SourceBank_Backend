@@ -18,6 +18,7 @@ from django.urls import path, include
 from users import url as user_urls
 from movements import urls as movements_urls
 from rest_framework import routers
+from notifications import urls as nots_urls
 from channels.routing import ProtocolTypeRouter
 router = routers.DefaultRouter()
 
@@ -26,5 +27,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include(user_urls)),
     path('movements/', include(movements_urls)),
+    path('notifications/', include(nots_urls)),
     path('api_auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

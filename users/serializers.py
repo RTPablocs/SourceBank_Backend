@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import User
 from django.contrib.auth.hashers import make_password
 from movements.serializers import MovementSerializer
+from notifications.serializers import NotificationSerializer
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -13,11 +14,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data['password'] = make_password(validated_data.get('password'))
+        validated_data['balance'] = 0
         return super(RegisterSerializer, self).create(validated_data)
 
 
 class LoggedUserSerializer(serializers.ModelSerializer):
     movements = MovementSerializer(many=True, read_only=True)
+    notifications = NotificationSerializer(many=True, read_only=True)
 
     class Meta:
         model = User

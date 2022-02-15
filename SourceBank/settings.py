@@ -140,10 +140,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2)
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    'http://192.168.1.63:3000'
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
 ASGI_APPLICATION = 'SourceBank.asgi.application'
 
 CHANNEL_LAYERS = {

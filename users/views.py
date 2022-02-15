@@ -20,10 +20,11 @@ class RetrieveMyOwnData(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, format=None):
-        user_id = request.auth.get('user_id')
+        user_id = request.auth['user_id']
         user = User.objects.get(pk=user_id)
         received_movements = user.receiver.all()
         sent_movements = user.sender.all()
         user.movements = list(chain(received_movements, sent_movements))
+        user.notifications = user.user_nots.all()
         serializer = LoggedUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
