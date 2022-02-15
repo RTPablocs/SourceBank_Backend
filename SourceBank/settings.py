@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2^5s-k#afw9(n_0x-=77rw6w$54l20%q%)0g96!+tn&bbivuoh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'users',
     'movements',
+    'vaults',
+    'notifications',
     'channels'
 ]
 
@@ -139,7 +141,8 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'http://192.168.1.63:3000'
 ]
 ASGI_APPLICATION = 'SourceBank.asgi.application'
 
