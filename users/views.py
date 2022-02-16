@@ -2,12 +2,15 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import RegisterSerializer, LoggedUserSerializer
 from rest_framework import permissions
+from .permissions import IsNotAuthenticated
 from .models import User
 from rest_framework import status
 from itertools import chain
 
 
 class RegisterAPIView(APIView):
+    permission_classes = [IsNotAuthenticated]
+
     def post(self, request, format=None):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
