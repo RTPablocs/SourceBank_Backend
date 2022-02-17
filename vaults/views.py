@@ -22,7 +22,11 @@ class CreateVault(APIView):
 
     def post(self, request):
         request.data['owner'] = request.auth['user_id']
+        if request.data['amount']:
+            request.data['amount'] = 0
+
         serializer = VaultSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Vault Created'}, status=status.HTTP_200_OK)

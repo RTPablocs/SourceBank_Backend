@@ -5,13 +5,21 @@ from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from jwt import decode
 from django.conf import settings
 from users.models import User
+from itertools import chain
 from urllib.parse import parse_qs
+from .serializers import LoggedUserSerializer
 
 
 @database_sync_to_async
 def get_user(user_id):
     try:
-        return User.objects.get(id=user_id)
+        user = User.objects.get(pk=user_id)
+        received_movements = user.receiver.all()
+        sent_movements = user.sender.all()
+        user.movements = list(chain(received_movements, sent_movements))
+        user.notifications = user.user_nots.all()
+        user.vaults = user.user_vaults.all()
+        return LoggedUserSerializer(user).data
     except User.DoesNotExist:
         return None
 

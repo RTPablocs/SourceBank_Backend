@@ -9,5 +9,6 @@ class VaultSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        if validated_data['date'] <= date.today():
-            raise serializers.ValidationError('Date is incorrect')
+        if validated_data['amount'] < 0:
+            raise serializers.ValidationError('Amount could not be under 0')
+        return super(VaultSerializer, self).create(validated_data)

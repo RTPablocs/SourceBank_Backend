@@ -19,7 +19,8 @@ from users import url as user_urls
 from movements import urls as movements_urls
 from rest_framework import routers
 from notifications import urls as nots_urls
-from channels.routing import ProtocolTypeRouter
+from vaults import urls as vaults_urls
+
 router = routers.DefaultRouter()
 
 urlpatterns = [
@@ -28,5 +29,6 @@ urlpatterns = [
     path('user/', include(user_urls)),
     path('movements/', include(movements_urls)),
     path('notifications/', include(nots_urls)),
+    path('vaults/', include(vaults_urls)),
     path('api_auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
