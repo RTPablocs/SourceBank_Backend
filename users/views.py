@@ -29,5 +29,6 @@ class RetrieveMyOwnData(APIView):
         sent_movements = user.sender.all()
         user.movements = list(chain(received_movements, sent_movements))
         user.notifications = user.user_nots.all()
+        user.vaults = user.user_vaults.all()
         serializer = LoggedUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
