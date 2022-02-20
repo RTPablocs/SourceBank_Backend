@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movement
+from .models import Movement, VaultMovement
 from users.models import User
 
 
@@ -24,3 +24,17 @@ class MovementSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Movement
+
+
+class RegisterVaultMovementSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['vault, amount']
+        model = VaultMovement
+
+    def validate(self, data):
+        user = User.objects.get(pk=data['sender_id'].id)
+        if data['amount'] < 0:
+            raise serializers.ValidationError('amount could not be under 0')
+        if user.balance <= 0 or user.balance < data['amount']:
+            raise serializers.ValidationError('You don\'t have enough money')
+        return data

@@ -4,5 +4,6 @@ from .views import *
 app_name = 'movements'
 
 urlpatterns = [
-    path('transaction/', RegisterMovement.as_view(), name='transaction')
+    path('transaction/', RegisterMovement.as_view(), name='transaction'),
+    path('vault/', RegisterVaultMovement.as_view())
 ]

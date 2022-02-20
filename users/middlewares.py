@@ -38,5 +38,6 @@ class AuthorizationMiddleware:
 
         else:
             user_data = decode(token_arg, settings.SECRET_KEY, algorithms=['HS256'])
+            scope['token'] = token_arg
             scope['user'] = await get_user(user_data['user_id'])
             return await self.app(scope, receive, send)
