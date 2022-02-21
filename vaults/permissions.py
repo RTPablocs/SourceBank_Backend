@@ -5,7 +5,11 @@ from .serializers import VaultSerializer
 
 class IsMyOwnVault(BasePermission):
     def has_permission(self, request, view):
-        db_vault = VaultSerializer(Vault.objects.get(id=request.data['vault']))
+        try:
+            db_vault = VaultSerializer(Vault.objects.get(id=request.data['vault']))
+        except KeyError:
+            db_vault = VaultSerializer(Vault.objects.get(id=request.parser_context['kwargs']['vault_id']))
+
         if db_vault['owner'].value == request.auth.payload['user_id']:
             return True
         return False

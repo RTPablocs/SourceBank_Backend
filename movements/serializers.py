@@ -26,15 +26,19 @@ class MovementSerializer(serializers.ModelSerializer):
         model = Movement
 
 
+class VaultMovementSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = '__all__'
+        model = VaultMovement
+
+
 class RegisterVaultMovementSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ['vault, amount']
+        fields = '__all__'
         model = VaultMovement
 
     def validate(self, data):
-        user = User.objects.get(pk=data['sender_id'].id)
-        if data['amount'] < 0:
-            raise serializers.ValidationError('amount could not be under 0')
+        user = User.objects.get(pk=data['user'].id)
         if user.balance <= 0 or user.balance < data['amount']:
             raise serializers.ValidationError('You don\'t have enough money')
         return data
