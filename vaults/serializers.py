@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Vault
-from datetime import date
 
 
 class VaultSerializer(serializers.ModelSerializer):

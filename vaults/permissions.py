@@ -20,7 +20,7 @@ class VaultHasNoBalance(BasePermission):
 
     def has_permission(self, request, view):
         try:
-            db_vault = VaultSerializer(Vault.objects.get(id=request.data['vault']))
+            db_vault = VaultSerializer(Vault.objects.get(id=request.data['id']))
         except KeyError:
             db_vault = VaultSerializer(Vault.objects.get(id=request.parser_context['kwargs']['vault_id'])).data
 

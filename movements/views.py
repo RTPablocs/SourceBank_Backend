@@ -30,7 +30,9 @@ class RegisterVaultMovement(APIView):
     permission_classes = [IsAuthenticated, IsMyOwnVault]
 
     def post(self, request):
-        serializer = RegisterVaultMovementSerializer(data=request.data)
+        data = request.data
+        data['user'] = request.auth['user_id']
+        serializer = RegisterVaultMovementSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'Transaction successful'}, status=status.HTTP_200_OK)

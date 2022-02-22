@@ -38,7 +38,7 @@ class RegisterVaultMovementSerializer(serializers.ModelSerializer):
         model = VaultMovement
 
     def validate(self, data):
-        user = User.objects.get(pk=data['user'].id)
+        user = User.objects.get(pk=data['vault'].owner_id)
         if user.balance <= 0 or user.balance < data['amount']:
             raise serializers.ValidationError('You don\'t have enough money')
         return data
