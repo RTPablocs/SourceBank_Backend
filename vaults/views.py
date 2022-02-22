@@ -24,9 +24,7 @@ class CreateVault(APIView):
 
     def post(self, request):
         request.data['owner'] = request.auth['user_id']
-        if request.data['amount']:
-            request.data['amount'] = 0
-
+        request.data['amount'] = 0
         serializer = VaultSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -38,8 +36,7 @@ class CreateVault(APIView):
 class DropVault(APIView):
     permission_classes = [IsAuthenticated, IsMyOwnVault, VaultHasNoBalance]
 
-    def delete(self, request):
-        vault_id = request.data['id']
+    def delete(self, request, vault_id):
         Vault.objects.filter(id=vault_id).delete()
         return Response({'message': 'vault has been deleted'}, status=status.HTTP_200_OK)
 

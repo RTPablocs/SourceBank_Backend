@@ -19,7 +19,12 @@ class VaultHasNoBalance(BasePermission):
     message = 'Sorry, this vault isn\'t empty'
 
     def has_permission(self, request, view):
-        db_vault = VaultSerializer(Vault.objects.get(id=request.data['vault']))
-        if db_vault['balance'] == 0:
+        try:
+            db_vault = VaultSerializer(Vault.objects.get(id=request.data['vault']))
+        except KeyError:
+            db_vault = VaultSerializer(Vault.objects.get(id=request.parser_context['kwargs']['vault_id'])).data
+
+        amount = float(db_vault['amount'])
+        if amount == 0:
             return True
         return False
