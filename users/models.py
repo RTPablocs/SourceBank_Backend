@@ -8,7 +8,7 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['password', 'first_name', 'last_name', 'email', 'country', 'city', 'phone']
 
-    photo = models.ImageField(null=True, upload_to='users')
+    photo = models.CharField(null=True, max_length=300)
     city = models.CharField(null=False, max_length=120)
     country = models.CharField(null=False, max_length=150)
     phone = models.CharField(null=False, max_length=190)
